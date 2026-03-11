@@ -25,7 +25,7 @@ const ProductCard = () => {
                         <p className='text-gray-500 mt-1'>EGP</p>
                         <p className='text-[20px] font-bold'>{ProdPrice}</p>
                     </div>
-                    <button className='group flex items-center gap-1.5 bg-gradient-to-r from-[#014e7c] to-[#011c40] hover:from-[#015f96] hover:to-[#012850] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm transition-all duration-200 active:scale-95'>
+                    <button className='group flex items-center gap-1.5 bg-gradient-to-r from-[#014e7c] to-[#011c40] hover:from-[#015f96] hover:to-[#012850] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm transition-all duration-200 active:scale-95 mr-1'>
                         <ShoppingCartIcon className='size-3.5' />
                         Add to Cart
                     </button>
