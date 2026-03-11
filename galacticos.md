@@ -1,10 +1,10 @@
 ## playbook of the project
 
 # PHASE 1: Foundation
-  - 1.1  Setting up backend and frontend [ ]
-  - 1.2 Setting up file structure        [ ]
-  - 1.3 Design , colors and logo         [ ]
-  - 1.4 Make the first request           [ ]
+  - 1.1  Setting up backend and frontend [Done]
+  - 1.2 Setting up file structure        [Done]
+  - 1.3 Design , colors and logo         [Done]
+  - 1.4 Make the first request           []
 
   
 # PHASE 2: Database(backend) and Components(frontend)
