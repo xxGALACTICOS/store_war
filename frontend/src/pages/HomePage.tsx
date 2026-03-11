@@ -1,8 +1,9 @@
-import NavBar from '../components/navbar/NavBar'
-import SideBar from '../components/SideBar'
+import Home from '../components/home/main/ProductsGrid'
+import NavBar from '../components/home/navbar/NavBar'
+import SideBar from '../components/home/sidebar/SideBar'
 const HomePage = () => {
     return (
-        <div className='h-screen'>
+        <div>
             <NavBar />
 
             {/* main container */}
@@ -11,8 +12,7 @@ const HomePage = () => {
                 <SideBar />
 
                 {/* cards container */}
-                <div className="w-[85%] bg-blue-500">
-                </div>
+                <Home />
             </div>
         </div>
     )

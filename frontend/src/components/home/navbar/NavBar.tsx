@@ -1,5 +1,5 @@
-import Logo from '../../../assets/Logo.svg'
-import DefPfp from '../../../assets/Default_pfp.svg'
+import Logo from '../../../../assets/Logo.svg'
+import DefPfp from '../../../../assets/Default_pfp.svg'
 import { Link } from 'react-router'
 import SearchBar from './SearchBar'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
