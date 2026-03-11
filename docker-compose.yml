@@ -5,11 +5,15 @@ services:
     build: ./backend
     container_name: store_backend
     ports:
-      - "3000:3000"
+      - "6969:6969"
     volumes:
       - ./backend:/app
       - /app/node_modules
     command: npm run dev
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/store_db
 
   frontend:
     build: ./frontend
@@ -20,6 +24,29 @@ services:
       - ./frontend:/app
       - /app/node_modules
     command: npm run dev
+
+  mongo:
+    image: mongo:7
+    container_name: store_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  mongo-express:
+    image: mongo-express:1
+    container_name: store_mongo_express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
 
 networks:
   default:
