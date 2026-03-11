@@ -1,7 +1,7 @@
-import NavBar from './navbar/NavBar'
+import NavBar from '../components/navbar/NavBar'
 const HomePage = () => {
     return (
-        <div className=''>
+        <div className='h-1000'>
             <NavBar />
         </div>
     )
