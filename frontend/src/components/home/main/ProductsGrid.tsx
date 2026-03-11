@@ -1,11 +1,27 @@
+import { useEffect, useState } from "react"
 import ProductCard from "./ProductCard"
 
-const data = [1, 2, 3, 4, 5, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+interface Product {
+    name: string,
+    rate: number,
+    price: number
+}
+
 const Home = () => {
+    const [data, setData] = useState<Product[]>([])
+    useEffect(() => {
+        fetch('http://localhost:4000/products/hamdy')
+            .then(res => res.json())
+            .then(data => setData(data))
+            .catch(err => console.error(err))
+    })
     return (
         <div className="w-[85%] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-7">
-            {data.map(() => {
-                return <ProductCard />
+            {data.map((product) => {
+                const name = product.name
+                const rate = product.rate
+                const price = product.price
+                return <ProductCard key={name} name={name} rate={rate} price={price} />
             })}
         </div>
     )
