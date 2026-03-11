@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { getProducts } from '../../../services/index'
 import ProductCard from "./ProductCard"
 
 interface Product {
@@ -10,10 +11,7 @@ interface Product {
 const Home = () => {
     const [data, setData] = useState<Product[]>([])
     useEffect(() => {
-        fetch('http://localhost:4000/products/hamdy')
-            .then(res => res.json())
-            .then(data => setData(data))
-            .catch(err => console.error(err))
+        getProducts().then(data => setData(data))
     })
     return (
         <div className="w-[85%] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-7">
