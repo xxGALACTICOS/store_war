@@ -16,7 +16,7 @@
   
 # PHASE 3: Authentication and Authorization
   - 3.1 Setting up authentication (JWT)        [ ]
-  - 3.2 Setting up authorization( MIDDLEWARE)         [ ]
+  - 3.2 Setting up authorization( MIDDLEWARE)        [ ]
   - 3.3 Test it with the frontend         [ ]
   
 # PHASE 4: USER Service
