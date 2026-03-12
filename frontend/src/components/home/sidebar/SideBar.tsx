@@ -24,12 +24,12 @@ const SideBar = () => {
         );
     }
     return (
-        <div className="min-h-screen w-[15%] bg-gradient-to-b from-[#011c40] to-[#014e7c] p-3 text-white hidden md:block">
+        <div className="min-h-screen bg-gradient-to-b from-[#011c40] to-[#014e7c] p-3 text-white hidden md:block">
             <p className="font-bold text-lg mb-3">Category</p>
             {data.map((category) => {
                 const isOpened = openCategory.includes(category.name)
-                return <div className="text-sm text-gray-400 pb-1  transition-all duration-200 ">
-                    <div className="flex select-none hover:text-gray-300" onClick={() => CategoryToggle(category.name)}>
+                return <div className="text-sm text-gray-400 pb-1 transition-all duration-200 whitespace-nowrap overflow-hidden">
+                    <div className="flex select-none hover:text-gray-300 " onClick={() => CategoryToggle(category.name)}>
                         <p> {category.name} </p>
                         <ChevronRightIcon
                             className={`size-5 transition-transform duration-300 ${isOpened ? "rotate-90" : ""}`}

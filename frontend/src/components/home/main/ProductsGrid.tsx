@@ -14,7 +14,7 @@ const Home = () => {
         getProducts().then(data => setData(data))
     })
     return (
-        <div className="w-[85%] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-7 p-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-7 p-3">
             {data.map((product) => {
                 const name = product.name
                 const rate = product.rate
