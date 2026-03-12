@@ -1,9 +1,12 @@
 import express from "express";
 import type { Application } from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 
 import { config } from "./config/config.ts";
+import { connectDB } from "./database/mongo/index.ts";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.ts";
+import authRouter from "./routes/auth.routes.ts";
 
 /*
  * CUSTOM IMPORTS
@@ -11,6 +14,7 @@ import { config } from "./config/config.ts";
 
 const app: Application = express();
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(express.json());
 app.use(
   cors({
@@ -18,21 +22,11 @@ app.use(
   }),
 );
 
-app.get("/", function(req, res) {
-  res.send("Hello World!");
-});
+app.use("/api/v1/auth", authRouter)
 
-app.get("/products/hamdy", function(req, res) {
-  const product: any = [{
-    name: "bassam",
-    rate: 3,
-    price: 500,
-  }]
-  res.json(product);
-});
 
 app.listen(config.port, '0.0.0.0', async () => {
-  await mongoose.connect(config.mongourl!);
+  await connectDB();
   console.log("Connected to MongoDB");
   console.log(`Server is running on port ${config.port}`);
 });
