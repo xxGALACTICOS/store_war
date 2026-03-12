@@ -6,7 +6,7 @@ import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/16/solid'
 
 /////////////////////////////////////////
-const isAuthenticated = 0;
+const isAuthenticated = 1;
 /////////////////////////////////////////
 
 const NavBar = () => {
@@ -20,12 +20,12 @@ const NavBar = () => {
             </div>
             <div className='flex gap-8 items-center'>
                 <Link to='/favourites'>
-                    <HeartIcon color='white' className='size-10 cursor-pointer' />
+                    <HeartIcon className='size-10 text-white cursor-pointer hover:text-gray-300' />
                 </Link>
                 <Link to='/cart'>
-                    <ShoppingCartIcon color='white' className='size-10 cursor-pointer' />
+                    <ShoppingCartIcon className='size-10 text-white cursor-pointer hover:text-gray-300' />
                 </Link>
-                {isAuthenticated ? <img src={DefPfp} alt="Profile" className="cursor-pointer rounded-full w-15 h-15" /> :
+                {isAuthenticated ? <img src={DefPfp} alt="Profile" className="cursor-pointer rounded-full w-15 h-15 hover:color-gray-300 hover:opacity-80" /> :
                     <button className='flex items-center gap-1.5 bg-gradient-to-r from-[#014e7c] to-[#011c40] hover:from-[#015f96] hover:to-[#012850] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm transition-all duration-200 active:scale-100 mr-1 cursor-pointer scale-120'>
                         <UserIcon className='size-3.5 white' />
                         Sign in
