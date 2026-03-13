@@ -1,29 +1,21 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { User } from '../../models/user.model';
+import { Company } from '../../models/company.model';
 
-export const userSchema = new Schema<User>({
-    username: {
+export const companySchema = new Schema<Company>({
+    name: {
         type: String,
         required: true,
     },
-    password: {
+    description: {
         type: String,
         required: true,
     },
-    email: {
+    logo: {
         type: String,
         required: true,
     },
-    phone: {
-        type: String,
-        required: true,
-    },
-    address: {
-        type: String,
-        required: true,
-    },
-    orders: {
-        type: [mongoose.Schema.Types.ObjectId],
+    specializations: {
+        type: [String],
         required: true,
     },
     createdAt: {
@@ -37,4 +29,5 @@ export const userSchema = new Schema<User>({
         default: Date.now,
     },
 });
-export const UserModel = mongoose.models.User || model<User>('User', userSchema);
+
+export const CompanyModel = mongoose.models.Company || model<Company>('Company', companySchema);

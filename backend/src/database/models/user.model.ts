@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface User {
     id: string;
     username: string;
@@ -5,6 +7,7 @@ export interface User {
     email: string;
     phone: string;
     address: string;
-
-    // for now
+    orders: mongoose.Schema.Types.ObjectId[];
+    createdAt: Date;
+    updatedAt: Date;
 }
