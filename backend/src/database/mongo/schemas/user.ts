@@ -18,10 +18,6 @@ export const userSchema = new Schema<User>({
         type: String,
         required: true,
     },
-    address: {
-        type: String,
-        required: true,
-    },
     orders: {
         type: [mongoose.Schema.Types.ObjectId],
         required: true,

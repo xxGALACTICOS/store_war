@@ -1,6 +1,13 @@
 import Router from "express";
+import jwt from "jsonwebtoken";
+import { getUserByEmail, userExists } from "../repositories/user.repo";
+import { config } from "../config/config";
+import { User } from "../database/models/user.model";
+import { generateOTP, sendOTPEmail } from "../utils/otp";
 
 const authRouter = Router();
+
+const redisDummy = {};
 
 /**
  * @swagger
@@ -38,8 +45,46 @@ const authRouter = Router();
  *       401:
  *         description: Invalid credentials
  */
-authRouter.post("/signin", (req, res) => {
-    res.send("Hello from auth routes/signin");
+authRouter.post("/signin", async (req, res) => {
+    // parse the request body
+    const { email, password } = req.body;
+
+    // validate the fields ( types , min length, max length, etc)
+    if (!email || !password) {
+        res.status(401).send("Invalid credentials");
+        return;
+    }
+
+    // check if the user exists
+    const user = await getUserByEmail(email);
+    if (!user) {
+        res.status(401).send("Invalid credentials");
+        return;
+    }
+
+    // check if the password is correct
+    if (user.password !== password) {
+        res.status(401).send("Invalid credentials");
+        return;
+    }
+
+    // generate the jwt token and put it in cookie and send it to the client
+    const token = jwt.sign({ userId: user._id }, config.jwt_secret, { expiresIn: "1h" });
+
+    // generate the cookie
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 3600 * 1000,
+    });
+
+    // if everything is ok, return the user data
+    res.send({
+        userId: user._id,
+        username: user.username,
+        email: user.email,
+    });
 });
 
 
@@ -69,8 +114,45 @@ authRouter.post("/signin", (req, res) => {
  *       401:
  *         description: Invalid credentials, bad request, or user already exists
  */
-authRouter.post("/signup", (req, res) => {
-    res.send("Hello from auth routes/signup");
+authRouter.post("/signup", async (req, res) => {
+    // parse the request body
+    const { username, email, password, phone } = req.body;
+
+
+    // validate the fields ( types , min length, max length, etc)
+    if (!username || !email || !password || !phone) {
+        res.status(401).send("Invalid credentials");
+        return;
+    }
+
+    // check if the user exists
+    const exists = await userExists(email);
+    if (exists) {
+        res.status(401).send("User already exists");
+        return;
+    }
+
+    // create the user
+    const newUser = {
+        username,
+        email,
+        password,
+        phone,
+        orders: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    };
+
+    console.log(newUser);
+
+    // we need to send otp code to the user's email and save the user in the redis
+    // until we verify the otp code
+    const sent = await sendOTPEmail(email, generateOTP());
+    if (!sent) {
+        return res.sendStatus(500).json({ message: "Error sending OTP" });
+    }
+    return res.sendStatus(200).json({ message: "OTP sent to user's email" });
+
 });
 
 /**

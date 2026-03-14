@@ -22,9 +22,6 @@
  *         password:
  *           type: string
  *           example: password123
- *         address:
- *           type: string
- *           example: 123 Main St, abrag elmadina
  *         phone:
  *           type: string
  *           example: 0111222333

@@ -7,4 +7,5 @@ export const config = {
   mongouri: process.env.MONGODB_URI,
   mail_user: process.env.MAIL_USER,
   mail_password: process.env.MAIL_PASSWORD,
+  jwt_secret: process.env.JWT_SECRET as string,
 };

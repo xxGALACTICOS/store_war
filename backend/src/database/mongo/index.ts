@@ -9,16 +9,6 @@ export async function connectDB() {
     db.on("error", console.error.bind(console, "connection error:"));
     db.once("open", async function() {
         console.log("connected to mongodb");
-        const User = mongoose.model("User", userSchema);
-        await User.createCollection();
-        const user = new User({
-            username: "ashraf",
-            password: "123456",
-            email: "ashraf@gmail.com",
-            phone: "1234567890",
-            address: "ashraf",
-        });
-        await user.save();
     });
     // db.models.User.createCollection()
 }
