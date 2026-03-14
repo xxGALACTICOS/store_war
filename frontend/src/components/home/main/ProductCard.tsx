@@ -35,7 +35,7 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
                 </div>
                 <button className='group flex items-center gap-1.5 bg-gradient-to-r from-[#014e7c] to-[#011c40] hover:from-[#015f96] hover:to-[#012850] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm transition-all duration-200 active:scale-95 mr-1' onClick={(e) => {
                     e.stopPropagation()
-                    const isLoggedIn = false // replace later with real auth check
+                    const isLoggedIn = false
 
                     if (!isLoggedIn) {
                         toast.error("You must be logged in!")
