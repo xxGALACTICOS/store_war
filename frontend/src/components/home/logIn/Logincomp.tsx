@@ -1,21 +1,46 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Logincomp() {
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
+  // regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^.{8,}$/;
+
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if(!emailRegex.test(email)){
+      toast.error("Please enter a valid email");
+      return;
+    }
+
+    if(!passwordRegex.test(password)){
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+
+    toast.success("Login successful");
+
     console.log("Email:", email);
     console.log("Password:", password);
+
+    navigate("/home");
   };
 
   return (
+    <>
     <form
       onSubmit={handleLogin}
-      className="w-[80%] h-[80vh] flex flex-col gap-[15px] border border-[#0c232f] p-[40px] rounded-[10px] bg-[#091a23] text-white relative shadow-[0px_25px_60px_rgba(14,18,39,0.62)]"
+      className="w-[80%] h-[80vh] flex flex-col gap-[15px] border border-[#0c232f] p-[40px] rounded-[10px] bg-[#0d212c] text-white relative shadow-[0px_25px_60px_rgba(14,18,39,0.62)]"
     >
 
       <h1 className="mb-[10px] text-[50px] text-center">
@@ -64,8 +89,7 @@ function Logincomp() {
 
       <button
         type="submit"
-        className="p-[12px] border-none rounded-[5px] text-white text-[16px] cursor-pointer bg-[#0e2533]"
-      >
+        className="p-[12px] border-none rounded-[5px] text-white text-[16px] cursor-pointer bg-[#0e2533] transition-all duration-200 hover:bg-[#143446] hover:scale-[1.03] active:scale-[0.95]"      >
         Sign In
       </button>
 
@@ -74,7 +98,10 @@ function Logincomp() {
 
         <p>
           Don't have an account yet?
-          <span className="text-[#2bb0ff] cursor-pointer ml-1">
+          <span
+          className="text-[#2bb0ff] cursor-pointer ml-1"
+          onClick={()=>navigate('/signup')}
+          >
             Sign up
           </span>
         </p>
@@ -93,6 +120,10 @@ function Logincomp() {
       </div>
 
     </form>
+
+    <ToastContainer position="top-right" />
+
+    </>
   );
 }
 

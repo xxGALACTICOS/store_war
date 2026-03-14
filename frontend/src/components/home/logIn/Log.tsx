@@ -7,7 +7,7 @@ function Log() {
     <div className="flex h-screen">
 
       {/* Left Side */}
-      <div className="w-[60%] bg-[#07151c] text-white relative flex flex-col items-center">
+      <div className="w-[60%] bg-[#091A23] text-white relative flex flex-col items-center">
 
         {/* Logo */}
         <h2 className="absolute top-[30px] left-[40px] text-[#ff4d4d]">
@@ -47,7 +47,7 @@ function Log() {
       </div>
 
       {/* Right Side */}
-      <div className="bg-[#07151c] w-[40%] flex justify-center items-center relative">
+      <div className="bg-[#091A23] w-[40%] flex justify-center items-center relative">
         <Logincomp />
       </div>
 
