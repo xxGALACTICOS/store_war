@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 
 export interface Product {
-<<<<<<< Updated upstream
-=======
     _id: string;
->>>>>>> Stashed changes
     name: string;
     description: string;
     rate: number;
@@ -12,7 +9,7 @@ export interface Product {
     price: number;
     stock: number;
     sold: number;
-    category: string;
+    category: string;       
     subCategory: string;
     companyId: mongoose.Schema.Types.ObjectId;
     coverPoster: string;
