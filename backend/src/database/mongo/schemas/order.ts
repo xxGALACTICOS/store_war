@@ -6,12 +6,9 @@ export const orderSchema = new Schema<Order>({
         type: String,
         required: true,
     },
-    companyIds: {
-        type: [String],
-        required: true,
-    },
     products: {
         type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Product',
         required: true,
     },
     createdAt: {

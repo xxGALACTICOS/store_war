@@ -8,6 +8,7 @@ import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.ts";
 import authRouter from "./routes/auth.routes.ts";
 import productRouter from "./routes/product.routes.ts";
+import orderRouter from "./routes/order.routes.ts";
 
 /*
  * CUSTOM IMPORTS
@@ -23,10 +24,11 @@ app.use(
   }),
 );
 
-app.use("/api/v1/auth", authRouter)
-app.use("/api/v1/products",productRouter)
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/products", productRouter);
 
-app.listen(config.port, '0.0.0.0', async () => {
+app.use("/api/v1/orders", orderRouter);
+app.listen(config.port, "0.0.0.0", async () => {
   await connectDB();
   console.log("Connected to MongoDB");
   console.log(`Server is running on port ${config.port}`);
