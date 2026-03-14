@@ -36,7 +36,7 @@ const ProductsGrid = ({ onSelectProduct }: Props) => {
 
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-7 p-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 p-3">
             {mockProducts.map((product) =>
                 <ProductCard
                     key={product.name}
