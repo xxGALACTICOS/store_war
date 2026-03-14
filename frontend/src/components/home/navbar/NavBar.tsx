@@ -4,9 +4,10 @@ import { Link } from 'react-router'
 import SearchBar from './SearchBar'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon, UserIcon } from '@heroicons/react/16/solid'
+import Button from '../../ui/Button'
 
 /////////////////////////////////////////
-const isAuthenticated = 1;
+const isAuthenticated = 0;
 /////////////////////////////////////////
 
 interface Props {
@@ -31,10 +32,11 @@ const NavBar = ({ toggleSidebar }: Props) => {
                     <ShoppingCartIcon className='size-10 text-white cursor-pointer hover:text-gray-300' />
                 </Link>
                 {isAuthenticated ? <img src={DefPfp} alt="Profile" className="cursor-pointer rounded-full w-15 h-15 hover:opacity-80" /> :
-                    <button className='flex items-center gap-1.5 bg-gradient-to-r from-[#014e7c] to-[#011c40] hover:from-[#015f96] hover:to-[#012850] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm transition-all duration-200 active:scale-100 mr-1 cursor-pointer scale-120'>
+                    <Button className='scale-120'>
                         <UserIcon className='size-3.5 white' />
                         Sign in
-                    </button>}
+                    </Button>
+                }
 
             </div>
         </nav>

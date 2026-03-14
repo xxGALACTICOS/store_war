@@ -2,6 +2,7 @@ import { StarIcon } from '@heroicons/react/16/solid'
 import ProdImage from '../../../../assets/Product.jpg'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { toast } from "react-toastify"
+import Button from '../../ui/Button'
 
 interface Props {
     name: string,
@@ -33,21 +34,23 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
                     <p className='text-gray-500 mt-1'>EGP</p>
                     <p className='text-[20px] font-bold'>{price}</p>
                 </div>
-                <button className='group flex items-center gap-1.5 bg-gradient-to-r from-[#014e7c] to-[#011c40] hover:from-[#015f96] hover:to-[#012850] text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm transition-all duration-200 active:scale-95 mr-1' onClick={(e) => {
-                    e.stopPropagation()
-                    const isLoggedIn = false
+                <Button
+                    onClick={(e) => {
+                        e.stopPropagation()
 
-                    if (!isLoggedIn) {
-                        toast.error("You must be logged in!")
-                        return
-                    }
+                        const isLoggedIn = false
 
-                    console.log({ name })
-                }}>
-                    <ShoppingCartIcon className='size-3.5' />
+                        if (!isLoggedIn) {
+                            toast.error("You must be logged in!")
+                            return
+                        }
+
+                        console.log({ name })
+                    }}
+                >
+                    <ShoppingCartIcon className="size-3.5" />
                     Add to Cart
-                </button>
-            </div>
+                </Button>            </div>
         </div>
     </div>
 
