@@ -14,8 +14,8 @@ const HomePage = () => {
 
     const openProduct = (name: string, vendor: string) => {
         setSearchParams({
-            product: name.toLowerCase(),
-            vendor: vendor.toLowerCase()
+            product: name,
+            vendor: vendor,
         })
     }
     const closeProduct = () => {
