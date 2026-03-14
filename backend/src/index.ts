@@ -7,13 +7,10 @@ import { connectDB } from "./database/mongo/index.ts";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.ts";
 import authRouter from "./routes/auth.routes.ts";
-<<<<<<< Updated upstream
 import productRouter from "./routes/product.routes.ts";
 import orderRouter from "./routes/order.routes.ts";
-=======
 import { connectRedis } from "./config/redis.ts";
 import { UserModel } from "./database/mongo/schemas/user.ts";
->>>>>>> Stashed changes
 
 /*
  * CUSTOM IMPORTS
