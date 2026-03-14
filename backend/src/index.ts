@@ -7,6 +7,7 @@ import { connectDB } from "./database/mongo/index.ts";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.ts";
 import authRouter from "./routes/auth.routes.ts";
+import productRouter from "./routes/product.routes.ts";
 
 /*
  * CUSTOM IMPORTS
@@ -23,7 +24,7 @@ app.use(
 );
 
 app.use("/api/v1/auth", authRouter)
-
+app.use("/api/v1/products",productRouter)
 
 app.listen(config.port, '0.0.0.0', async () => {
   await connectDB();

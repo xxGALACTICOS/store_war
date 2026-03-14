@@ -45,6 +45,7 @@ const redisDummy = {};
  *       401:
  *         description: Invalid credentials
  */
+<<<<<<< Updated upstream
 authRouter.post("/signin", async (req, res) => {
     // parse the request body
     const { email, password } = req.body;
@@ -85,6 +86,12 @@ authRouter.post("/signin", async (req, res) => {
         username: user.username,
         email: user.email,
     });
+=======
+authRouter.post("/signin", (req, res) => {
+    res.send("Hello from auth routes/signin");
+   
+    
+>>>>>>> Stashed changes
 });
 
 

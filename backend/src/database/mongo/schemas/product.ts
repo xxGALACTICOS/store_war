@@ -20,19 +20,35 @@ export const productSchema = new Schema<Product>({
     },
     sold: {
         type: Number,
-        required: true,
+        
     },
     category: {
         type: String,
         required: true,
     },
-    companyId: {
-        type: mongoose.Schema.Types.ObjectId,
+    subCategory: {
+        type: String,
         required: true,
     },
-    pictures: {
-        type: [String],
+    companyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
         required: true,
+    },
+    coverPoster: {
+        type: String,
+        required: true,
+    },
+    sidePosters: {
+        type: [String],
+    },
+    rate: {
+        type: Number,
+        required: true, 
+    },
+    voters: {
+        type: Number,
+        required: true, 
     },
     createdAt: {
         type: Date,

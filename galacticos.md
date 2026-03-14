@@ -4,12 +4,12 @@
   - 1.1  Setting up backend and frontend [Done]
   - 1.2 Setting up file structure        [Done]
   - 1.3 Design , colors and logo         [Done]
-  - 1.4 Make the first request           []
+  - 1.4 Make the first request           [Done]
 
   
 # PHASE 2: Database(backend) and Components(frontend)
-  - 2.1 Setting up mongodb              [ ]
-  - 2.2 Setting up models and schemas   [ ]
+  - 2.1 Setting up mongodb              [Done]
+  - 2.2 Setting up models and schemas   [Done]
   - 2.3 Setting up DAOs                 [ ]
   - 2.4 Implementing dummy data         [ ]
   - 2.5 Test the endpoints with frontend [ ]
