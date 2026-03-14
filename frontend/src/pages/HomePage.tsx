@@ -1,9 +1,27 @@
 import { useState } from 'react'
-import Home from '../components/home/main/ProductsGrid'
 import NavBar from '../components/home/navbar/NavBar'
 import SideBar from '../components/home/sidebar/SideBar'
+import ProductPage from './ProductPage'
+import ProductsGrid from '../components/home/main/ProductsGrid'
+import { useSearchParams } from 'react-router'
 const HomePage = () => {
     const [sideToggle, setSideToggle] = useState(true)
+
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const product = searchParams.get("product")
+    const vendor = searchParams.get("vendor")
+
+    const openProduct = (name: string, vendor: string) => {
+        setSearchParams({
+            product: name.toLowerCase(),
+            vendor: vendor.toLowerCase()
+        })
+    }
+    const closeProduct = () => {
+        setSearchParams({})
+    }
+
     return (
         <div>
             <NavBar toggleSidebar={() => {
@@ -22,8 +40,17 @@ const HomePage = () => {
 
                 {/* cards container */}
                 <div className="flex-1 transition-all duration-300">
+                    {!product && (
+                        <ProductsGrid onSelectProduct={openProduct} />
+                    )}
+                    {product && (
+                        <ProductPage
+                            product={product}
+                            vendor={vendor}
+                            goBack={closeProduct}
+                        />
+                    )}
 
-                    <Home />
                 </div>
             </div>
         </div>
