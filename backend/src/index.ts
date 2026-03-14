@@ -7,12 +7,30 @@ import { connectDB } from "./database/mongo/index.ts";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.ts";
 import authRouter from "./routes/auth.routes.ts";
+<<<<<<< Updated upstream
 import productRouter from "./routes/product.routes.ts";
 import orderRouter from "./routes/order.routes.ts";
+=======
+import { connectRedis } from "./config/redis.ts";
+import { UserModel } from "./database/mongo/schemas/user.ts";
+>>>>>>> Stashed changes
 
 /*
  * CUSTOM IMPORTS
  */
+(async () => {
+
+  const user = new UserModel({
+    username: "ahmed ashraf Doe",
+    email: "john@example.com",
+    password: "123456",
+    phone: "1234567890",
+    orders: []
+  })
+  await user.save();
+  console.log("User created");
+})();
+
 
 const app: Application = express();
 
@@ -30,6 +48,7 @@ app.use("/api/v1/products", productRouter);
 app.use("/api/v1/orders", orderRouter);
 app.listen(config.port, "0.0.0.0", async () => {
   await connectDB();
+  await connectRedis();
   console.log("Connected to MongoDB");
   console.log(`Server is running on port ${config.port}`);
 });

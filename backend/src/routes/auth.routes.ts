@@ -4,10 +4,10 @@ import { getUserByEmail, userExists } from "../repositories/user.repo";
 import { config } from "../config/config";
 import { User } from "../database/models/user.model";
 import { generateOTP, sendOTPEmail } from "../utils/otp";
+import { redisClient } from "../config/redis";
 
 const authRouter = Router();
 
-const redisDummy = {};
 
 /**
  * @swagger
@@ -124,35 +124,42 @@ authRouter.post("/signup", async (req, res) => {
         res.status(401).send("Invalid credentials");
         return;
     }
+    try {
 
-    // check if the user exists
-    const exists = await userExists(email);
-    if (exists) {
-        res.status(401).send("User already exists");
-        return;
+
+        // check if the user exists
+        const exists = await userExists(email);
+        if (exists) {
+            res.status(401).send("User already exists");
+            return;
+        }
+
+        // create the user
+        const otp = generateOTP();
+        const newUser = {
+            username,
+            email,
+            password,
+            phone,
+            otp,
+        };
+
+        console.log(newUser);
+
+        // we need to send otp code to the user's email and save the user in the redis
+        // until we verify the otp code
+        const sent = await sendOTPEmail(email, otp);
+        if (!sent) {
+            return res.sendStatus(500).json({ message: "Error sending OTP" });
+        }
+
+        // save the user in redis
+        await redisClient.set(email, JSON.stringify(newUser));
+        return res.sendStatus(200).json({ message: "OTP sent to user's email" });
+    } catch (err) {
+        console.log(err);
+        return res.sendStatus(500).json({ message: "Error saving user in redis" });
     }
-
-    // create the user
-    const newUser = {
-        username,
-        email,
-        password,
-        phone,
-        orders: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    };
-
-    console.log(newUser);
-
-    // we need to send otp code to the user's email and save the user in the redis
-    // until we verify the otp code
-    const sent = await sendOTPEmail(email, generateOTP());
-    if (!sent) {
-        return res.sendStatus(500).json({ message: "Error sending OTP" });
-    }
-    return res.sendStatus(200).json({ message: "OTP sent to user's email" });
-
 });
 
 /**
@@ -181,27 +188,27 @@ authRouter.post("/forgotpassword", (req, res) => {
     res.send("Hello from auth routes/forgot-password");
 });
 
-/**
- * @swagger
- * /api/v1/auth/sendotp:
- *   post:
- *     summary: get user's email and send OTP to it 
- *     description: Returns ok otp is sent
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *             example:
- *                 email: johndoe@example.com
- *     responses:
- *       200:
- *         description: Ok otp is sent
- *       401:
- *         description: request time out 
- */
-authRouter.post("/sendotp", (req, res) => {
-    res.send("Hello from auth routes/sendotp");
-});
+// /**
+//  * @swagger
+//  * /api/v1/auth/sendotp:
+//  *   post:
+//  *     summary: get user's email and send OTP to it 
+//  *     description: Returns ok otp is sent
+//  *     requestBody:
+//  *       required: true
+//  *       content:
+//  *         application/json:
+//  *             example:
+//  *                 email: johndoe@example.com
+//  *     responses:
+//  *       200:
+//  *         description: Ok otp is sent
+//  *       401:
+//  *         description: request time out 
+//  */
+// authRouter.post("/sendotp", (req, res) => {
+//
+// });
 
 /**
  * @swagger
@@ -214,6 +221,7 @@ authRouter.post("/sendotp", (req, res) => {
  *       content:
  *         application/json:
  *             example:
+ *                 email: johndoe@example.com
  *                 otp: 123456
  *     responses:
  *       200:
@@ -221,8 +229,23 @@ authRouter.post("/sendotp", (req, res) => {
  *       401:
  *         description: Invalid otp
  */
-authRouter.post("/validateotp", (req, res) => {
-    res.send("Hello from auth routes/sendotp");
+authRouter.post("/validateotp", async (req, res) => {
+    const { email, otp } = req.body;
+    try {
+        const user = await redisClient.get(email);
+        if (!user) {
+            return res.sendStatus(401).json({ message: "User not found" });
+        }
+        const userData = JSON.parse(user);
+        if (userData.otp !== otp) {
+            return res.sendStatus(401).json({ message: "Invalid OTP" });
+        }
+        return res.sendStatus(200).json({ message: "OTP is correct" });
+
+    } catch (err) {
+        console.log(err);
+        return res.sendStatus(500).json({ message: "Error validating OTP" });
+    }
 });
 
 
@@ -242,8 +265,9 @@ authRouter.post("/validateotp", (req, res) => {
  *       200:
  *         description: Ok otp is resent
  */
-authRouter.post("/resendotp", (req, res) => {
-    res.send("Hello from auth routes/resendotp");
+authRouter.post("/resendotp", async (req, res) => {
+    const { email } = req.body;
+    a
 });
 
 
