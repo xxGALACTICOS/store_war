@@ -47,10 +47,12 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
 
                         console.log({ name })
                     }}
+                    color='bg-main hover:bg-secondary'
                 >
                     <ShoppingCartIcon className="size-3.5" />
                     Add to Cart
-                </Button>            </div>
+                </Button>
+            </div>
         </div>
     </div>
 

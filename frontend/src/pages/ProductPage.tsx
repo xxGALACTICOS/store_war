@@ -12,7 +12,7 @@ interface Props {
 const ProductPage = ({ product, vendor, goBack }: Props) => {
 
     return (
-        <div>
+        <div className='bg-beige'>
             <ArrowLongLeftIcon className='size-15 ml-3 mt-1 hover:bg-gray-300 rounded-full text-gray-500' onClick={goBack} />
             <div className="flex">
 
