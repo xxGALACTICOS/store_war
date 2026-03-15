@@ -24,7 +24,7 @@ const SideBar = () => {
         );
     }
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#011c40] to-[#014e7c] p-3 text-white hidden md:block">
+        <div className="min-h-screen bg-main p-3 text-white hidden md:block">
             <p className="font-bold text-lg mb-3">Category</p>
             {data.map((category) => {
                 const isOpened = openCategory.includes(category.name)

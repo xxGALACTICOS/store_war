@@ -16,7 +16,7 @@ interface Props {
 
 const NavBar = ({ toggleSidebar }: Props) => {
     return (
-        <nav className='p-2 flex justify-between bg-gradient-to-r from-[#011c40] to-[#014e7c] w-full sticky top-0 z-10'>
+        <nav className='p-2 flex justify-between bg-main w-full sticky top-0 z-10'>
             <div className="flex items-center mb-1 select-none">
                 <Bars3Icon className='text-white size-10 mr-8 ml-3 cursor-pointer' onClick={toggleSidebar} />
                 <Link to='/home'>
