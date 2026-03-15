@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import img from "../../../../assets/login.png";
 import logo from "../../../../assets/logos.png";
+import Logo from "../../../../assets/Logo.svg";
 import Logincomp from "./Logincomp";
 
 function Log() {
@@ -10,9 +12,9 @@ function Log() {
       <div className="w-[60%] bg-[#091A23] text-white relative flex flex-col items-center">
 
         {/* Logo */}
-        <h2 className="absolute top-[30px] left-[40px] text-[#ff4d4d]">
-          storewar
-        </h2>
+        <Link to='/'>
+          <img src={Logo} className='w-30 cursor-pointer absolute top-[30px] left-[40px]' alt='Store War' />
+        </Link>
 
         {/* Center Content */}
         <div className="text-center mt-[100px] flex flex-col items-center">
