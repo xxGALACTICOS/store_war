@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from "react";
 import { TopBar } from '../components/login/TopBar'
 import { useNavigate } from "react-router-dom"
 
 export const Otp = () => {
     const [otpin, setOtpin] = useState(["", "", "", "", "", ""]);
     const navigate = useNavigate()
+    const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
     const handleChange = (value: string, index: number) => {
         if (!/^[0-9]?$/.test(value)) return; // numbers only
@@ -12,6 +13,9 @@ export const Otp = () => {
         const newOtp = [...otpin];
         newOtp[index] = value;
         setOtpin(newOtp);
+        if (value && index < 5) {
+            inputsRef.current[index + 1]?.focus();
+        }
     };
 
     const isOTPComplete = otpin.every((digit) => digit !== "");
@@ -23,7 +27,7 @@ export const Otp = () => {
     };
 
     return (
-        <div className="h-screen overflow-hidden bg-gradient-to-b from-[#000000] via-[#042c36] to-[#053b47]">
+        <div className="h-screen overflow-hidden bg-main">
             <TopBar />
             <div className="w-full h-full flex items-center  justify-center ">
 
@@ -31,7 +35,7 @@ export const Otp = () => {
                     onSubmit={handleVerify}
                     className="w-150 h-125 bg-gray-200 rounded-lg shadow-xl flex flex-col"
                 >
-                    <p className="flex items-center justify-center w-13 h-13 rounded-full bg-gradient-to-b from-[#000000] via-[#042c36] to-[#053b47] text-5xl text-white mt-5 ml-70">2</p>
+                    <p className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary text-5xl text-white mt-5 ml-70">2</p>
                     <div className="w-110  ml-20 mt-8 flex flex-col items-center">
                         <h1 className="text-3xl font-semibold text-gray-800 mb-3">OTP Verification</h1>
                         <p className="text-gray-700 mb-7">We have sent the verification code to your email address</p>
@@ -42,6 +46,9 @@ export const Otp = () => {
                             <input
                                 key={index}
                                 type="text"
+                                ref={(el) => {
+                                    if (el) inputsRef.current[index] = el;
+                                }}
                                 maxLength={1}
                                 value={digit}
                                 onChange={(e) => handleChange(e.target.value, index)}
@@ -55,7 +62,7 @@ export const Otp = () => {
                             disabled={!isOTPComplete}
                             className={`rounded-md w-40 h-10 text-white 
                                     ${isOTPComplete
-                                    ? "bg-gradient-to-b from-[#000000] via-[#042c36] to-[#053b47] cursor-pointer"
+                                    ? "bg-secondary cursor-pointer"
                                     : "bg-gray-400 cursor-not-allowed"}`}
                         >
                             Verify OTP

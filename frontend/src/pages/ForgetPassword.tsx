@@ -15,7 +15,7 @@ const ForgetPassword = () => {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-gradient-to-b from-[#000000] via-[#042c36] to-[#053b47]">
+    <div className="h-screen overflow-hidden bg-main">
       <TopBar />
       <div className="w-full h-full flex items-center justify-center ">
 
@@ -25,7 +25,7 @@ const ForgetPassword = () => {
           onSubmit={handleSubmit}
           className="w-150 h-125 bg-gray-200 rounded-lg shadow-xl flex flex-col "
         >
-          <p className="flex items-center justify-center w-13 h-13 rounded-full bg-gradient-to-b from-[#000000] via-[#042c36] to-[#053b47] text-5xl text-white mt-5 ml-70">1</p>
+          <p className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary text-5xl text-white mt-5 ml-70">1</p>
           <div className="w-110  ml-15 mt-10">
             <h1 className="text-3xl font-semibold text-gray-800 mb-3">Forgot your password</h1>
             <p className="text-gray-600">Please enter the email address you'd like your password reset information sent to</p>
@@ -51,7 +51,7 @@ const ForgetPassword = () => {
               disabled={!email}
               className={`rounded-md w-40 h-10 text-white 
               ${email
-                  ? "bg-gradient-to-b from-[#000000] via-[#042c36] to-[#053b47] cursor-pointer"
+                  ? "bg-secondary cursor-pointer"
                   : "bg-gray-400 cursor-not-allowed"
                 }`}
             >
