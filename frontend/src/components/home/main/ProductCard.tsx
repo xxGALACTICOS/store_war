@@ -47,7 +47,7 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
 
                         console.log({ name })
                     }}
-                    color='bg-main hover:bg-secondary'
+                    color='bg-main hover:bg-second'
                 >
                     <ShoppingCartIcon className="size-3.5" />
                     Add to Cart
