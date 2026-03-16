@@ -2,7 +2,7 @@ import { StarIcon } from '@heroicons/react/16/solid'
 import ProdImage from '../../../../assets/Product.jpg'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { toast } from "react-toastify"
-import Button from '../../ui/Button'
+import ButtonGradient from '../../ui/ButtonGradient'
 
 interface Props {
     name: string,
@@ -34,7 +34,7 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
                     <p className='text-gray-500 mt-1'>EGP</p>
                     <p className='text-[20px] font-bold'>{price}</p>
                 </div>
-                <Button
+                <ButtonGradient
                     onClick={(e) => {
                         e.stopPropagation()
 
@@ -51,7 +51,7 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
                 >
                     <ShoppingCartIcon className="size-3.5" />
                     Add to Cart
-                </Button>
+                </ButtonGradient>
             </div>
         </div>
     </div>

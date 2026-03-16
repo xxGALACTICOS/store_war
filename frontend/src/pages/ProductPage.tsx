@@ -1,6 +1,6 @@
 import { ArrowLongLeftIcon } from '@heroicons/react/24/outline'
 import ProdImage from '../../assets/Product.jpg'
-import Button from '../components/ui/Button'
+import ButtonGradient from '../components/ui/ButtonGradient'
 import { CreditCardIcon, HeartIcon, ShoppingCartIcon, StarIcon } from '@heroicons/react/16/solid'
 
 interface Props {
@@ -48,18 +48,18 @@ const ProductPage = ({ product, vendor, goBack }: Props) => {
                             </div>
                         </div>
                         <div className="flex justify-center w-full flex-col items-center gap-3">
-                            <Button color='bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br' className='flex justify-center mt-5 w-100'>
+                            <ButtonGradient color='bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br' className='flex justify-center mt-5 w-100'>
                                 <HeartIcon className='size-6' />
                                 Add to favourites
-                            </Button>
-                            <Button className='w-100 flex justify-center'>
+                            </ButtonGradient>
+                            <ButtonGradient className='w-100 flex justify-center'>
                                 <ShoppingCartIcon className='size-6' />
                                 Add to cart
-                            </Button>
-                            <Button className='w-100 flex justify-center' color='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br'>
+                            </ButtonGradient>
+                            <ButtonGradient className='w-100 flex justify-center' color='bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br'>
                                 <CreditCardIcon className='size-6' />
                                 Buy now
-                            </Button>
+                            </ButtonGradient>
                         </div>
                         <div className="flex items-center mt-5">
                             <StarIcon className='size-10 text-yellow-500' />
