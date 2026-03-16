@@ -1,13 +1,13 @@
 import Logo from '../../../../assets/Logo.svg'
-import DefPfp from '../../../../assets/Default_pfp.svg'
 import { Link } from 'react-router'
 import SearchBar from './SearchBar'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon, UserIcon } from '@heroicons/react/16/solid'
 import Button from '../../ui/ButtonGradient'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 /////////////////////////////////////////
-const isAuthenticated = 0;
+const isAuthenticated = 1;
 /////////////////////////////////////////
 
 interface Props {
@@ -31,7 +31,9 @@ const NavBar = ({ toggleSidebar }: Props) => {
                 <Link to='/cart'>
                     <ShoppingCartIcon className='size-10 text-white cursor-pointer hover:text-gray-300' />
                 </Link>
-                {isAuthenticated ? <img src={DefPfp} alt="Profile" className="cursor-pointer rounded-full w-15 h-15 hover:opacity-80" /> :
+                {isAuthenticated ? <Avatar className="cursor-pointer rounded-full w-12 h-12 hover:opacity-80">
+                    <AvatarFallback className='text-xl'>{"Ahmed Hamdy".split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                </Avatar> :
                     <Button className='scale-120'>
                         <UserIcon className='size-3.5 white' />
                         Sign in

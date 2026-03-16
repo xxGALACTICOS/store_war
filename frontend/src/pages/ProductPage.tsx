@@ -2,6 +2,7 @@ import { ArrowLongLeftIcon } from '@heroicons/react/24/outline'
 import ProdImage from '../../assets/Product.jpg'
 import ButtonGradient from '../components/ui/ButtonGradient'
 import { CreditCardIcon, HeartIcon, ShoppingCartIcon, StarIcon } from '@heroicons/react/16/solid'
+import Feedback from '@/components/product/Feedback'
 
 interface Props {
     product: string | null
@@ -12,8 +13,8 @@ interface Props {
 const ProductPage = ({ product, vendor, goBack }: Props) => {
 
     return (
-        <div className='bg-beige'>
-            <ArrowLongLeftIcon className='size-15 ml-3 mt-1 hover:bg-gray-300 rounded-full text-gray-500' onClick={goBack} />
+        <div className='bg-beige h-full pt-1'>
+            <ArrowLongLeftIcon className='size-15 ml-3 hover:bg-gray-300 rounded-full text-gray-500' onClick={goBack} />
             <div className="flex">
 
                 <div className='ml-20 flex'>
@@ -71,8 +72,9 @@ const ProductPage = ({ product, vendor, goBack }: Props) => {
             </div>
             <div className="mt-5 border-t text-gray-400" />
             <div className="flex justify-center">
-                <h1 className='text-4xl font-bold mt-3'>Reviews section</h1>
+                <h1 className='text-4xl font-bold my-6'>Feedbacks</h1>
             </div>
+            <Feedback />
         </div>
     )
 }
