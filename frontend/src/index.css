@@ -6,7 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 @theme {
     --color-main: #091A23;
-    --color-secondary: #0d212c;
+    --color-second: #0d212c;
     --color-beige: #fffdf2;
 }
 

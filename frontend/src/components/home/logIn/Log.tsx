@@ -9,7 +9,7 @@ function Log() {
     <div className="flex h-screen">
 
       {/* Left Side */}
-      <div className="w-[60%] bg-[#091A23] text-white relative flex flex-col items-center">
+      <div className="w-[60%] bg-main text-white relative flex flex-col items-center">
 
         {/* Logo */}
         <Link to='/'>
@@ -49,7 +49,7 @@ function Log() {
       </div>
 
       {/* Right Side */}
-      <div className="bg-[#091A23] w-[40%] flex justify-center items-center relative">
+      <div className="bg-main w-[40%] flex justify-center items-center relative">
         <Logincomp />
       </div>
 
