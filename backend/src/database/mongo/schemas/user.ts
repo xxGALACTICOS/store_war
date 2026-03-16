@@ -12,6 +12,7 @@ export const userSchema = new Schema<User>({
     },
     email: {
         type: String,
+        unique: true,
         required: true,
     },
     phone: {

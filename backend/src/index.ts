@@ -1,5 +1,5 @@
 import express from "express";
-import type { Application } from "express";
+import type { Application, Response } from "express";
 import cors from "cors";
 
 import { config } from "./config/config.ts";
@@ -10,25 +10,14 @@ import authRouter from "./routes/auth.routes.ts";
 import productRouter from "./routes/product.routes.ts";
 import orderRouter from "./routes/order.routes.ts";
 import { connectRedis } from "./config/redis.ts";
-import { UserModel } from "./database/mongo/schemas/user.ts";
+import { sseMiddleware } from "./middlewares/sse.middleware.ts";
 
 /*
  * CUSTOM IMPORTS
  */
-(async () => {
-
-  const user = new UserModel({
-    username: "ahmed ashraf Doe",
-    email: "john@example.com",
-    password: "123456",
-    phone: "1234567890",
-    orders: []
-  })
-  await user.save();
-  console.log("User created");
-})();
 
 
+export const clients: Response[] = [];
 const app: Application = express();
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -39,10 +28,38 @@ app.use(
   }),
 );
 
+app.use(sseMiddleware)
+
+// monitoring
+app.get("/health", (_, res) => {
+  res.send("OK");
+});
+
+app.get("/monitor", (_, res: Response) => {
+  res.sendFile("/home/miserable/programming/store_war/backend/src/monitor/index.html");
+});
+
+app.get("/events", (req, res: Response) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
+  res.flushHeaders();
+
+  clients.push(res);
+
+  req.on("close", () => {
+    const index = clients.indexOf(res);
+    if (index !== -1) {
+      clients.splice(index, 1);
+    }
+  });
+})
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
-
 app.use("/api/v1/orders", orderRouter);
+
 app.listen(config.port, "0.0.0.0", async () => {
   await connectDB();
   await connectRedis();

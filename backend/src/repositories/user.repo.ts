@@ -19,12 +19,27 @@ export async function getUserByEmail(email: string): Promise<User> {
   }
 }
 
-export async function createUser(user: User): Promise<User> {
+export async function createUser(user: Pick<User, "username" | "email" | "password" | "phone">): Promise<void> {
   try {
+
     const newUser = new UserModel(user);
     await newUser.save();
-    return newUser;
+
   } catch (e) {
     throw new Error("Error creating user");
+  }
+}
+
+export async function updateUserPassword(email: string, password: string): Promise<boolean> {
+  try {
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return false;
+    }
+    user.password = password;
+    await user.save();
+    return true;
+  } catch (e) {
+    throw new Error("Error updating user password");
   }
 }
