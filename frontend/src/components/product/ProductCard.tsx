@@ -37,8 +37,8 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
 
                 <div className="flex items-center">
                     <StarIcon className="size-5 mr-1" />
-                    <p className="font-bold pr-1">{rate}</p>
-                    <p className="text-[10px] mt-2 text-gray-500">
+                    <p className="font-bold pr-1 text-lg">{rate}</p>
+                    <p className="text-[10px] mt-1 text-gray-500">
                         ({ProdVoters})
                     </p>
                 </div>
