@@ -5,6 +5,7 @@ import { toast } from "react-toastify"
 import ButtonGradient from '../ui/ButtonGradient'
 
 import { Card, CardContent } from "@/components/ui/card"
+import { useState } from 'react'
 
 interface Props {
     name: string
@@ -16,9 +17,11 @@ interface Props {
 
 ////////////////////////////////////////////
 const ProdVoters = 100
+const isLoggedIn = true
 ////////////////////////////////////////////
 
 const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
+    const [added, setAdded] = useState(false)
     return (
         <Card
             onClick={() => onClick(name, vendor)}
@@ -53,21 +56,29 @@ const ProductCard = ({ name, rate, price, vendor, onClick }: Props) => {
                         onClick={(e) => {
                             e.stopPropagation()
 
-                            const isLoggedIn = false
 
                             if (!isLoggedIn) {
                                 toast.error("You must be logged in!")
                                 return
                             }
+                            else {
+                                if (!added) {
+                                    console.log({ name })
+                                    toast.success("Added Succesfully!")
+                                    setAdded(true)
+                                    return
+                                }
+                            }
 
-                            console.log({ name })
                         }}
                         color="bg-main hover:bg-second"
                         className='h-10'
+                        disabled={added}
 
                     >
                         <ShoppingCartIcon className="size-3.5" />
-                        Add to Cart
+                        {added ? <p>Added to Cart</p>
+                            : <p>Add to Cart</p>}
                     </ButtonGradient>
                 </div>
             </CardContent>
