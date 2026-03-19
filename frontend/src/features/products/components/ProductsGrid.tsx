@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react"
-import { getProducts } from '../../../services/index'
 import ProductCard from "./ProductCard"
+import { useProducts } from "../hooks/useProducts"
 
 interface Product {
-    name: string,
-    rate: number,
+    name: string
+    rate: number
     price: number
     vendor: string
-
+    voters: number
+    coverPoster: string
 }
 
 
 
 ////////////////////////////////////////////////////////////////////////////
 const mockProducts: Product[] = [
-    { name: "Keyboard", rate: 4.5, price: 1200, vendor: "Samsung" },
-    { name: "Mouse", rate: 4.2, price: 600, vendor: "Logitech" },
-    { name: "Laptop", rate: 4.8, price: 32000, vendor: "Dell" },
-    { name: "Headphones", rate: 4.4, price: 2000, vendor: "Sony" },
-    { name: "Monitor", rate: 4.6, price: 8500, vendor: "LG" },
+    { name: "Keyboard", rate: 4.5, price: 1200, vendor: "Samsung", voters: 100, coverPoster: '11' },
+    { name: "Mouse", rate: 4.2, price: 600, vendor: "Logitech", voters: 100, coverPoster: '11' },
+    { name: "Laptop", rate: 4.8, price: 32000, vendor: "Dell", voters: 100, coverPoster: '11' },
+    { name: "Headphones", rate: 4.4, price: 2000, vendor: "Sony", voters: 100, coverPoster: '11' },
+    { name: "Monitor", rate: 4.6, price: 8500, vendor: "LG", voters: 100, coverPoster: '11' },
 ]
 ////////////////////////////////////////////////////////////////////////////
 
@@ -28,11 +28,8 @@ interface Props {
 }
 
 const ProductsGrid = ({ onSelectProduct }: Props) => {
-    const [data, setData] = useState<Product[]>([])
-    useEffect(() => {
-        getProducts().then(data => setData(data))
-    })
-
+    const data = useProducts<Product>('Electronics', 'Mobile Phones')
+    console.log(data.message)
 
 
     return (
