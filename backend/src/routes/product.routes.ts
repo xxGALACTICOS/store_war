@@ -4,7 +4,42 @@ import { Product } from "../database/models/product.model";
 import { ProductModel } from "../database/mongo/schemas/product";
 const productRouter = Router();
 
-//create product
+/**
+ * @swagger
+ * /api/v1/products/createproduct:
+ *   post:
+ *     summary: Create a new product
+ *     description: Returns ok and sends OTP to user's email
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             items:
+ *               $ref: '#/components/schemas/Product'
+ *             example:
+ *                 name: shoe
+ *                 description: this is a shoe
+ *                 rate: 10
+ *                 voters: 10
+ *                 price: 10
+ *                 stock: 1
+ *                 category: shoes
+ *                 subCategory: sneakers
+ *                 companyId: UUID_232l8%^&*
+ *                 coverPoster: shoes.jpg
+ *                 sidePosters: [shoes.jpg, shoes.jpg]
+ *     responses:
+ *       201:
+ *         description: Ok product created
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Product created successfully 
+ *       400:
+ *         description: Bad request
+ */
 productRouter.post("/createproduct", async (req, res) => {
   const {
     name,
@@ -54,15 +89,58 @@ productRouter.post("/createproduct", async (req, res) => {
       subCategory,
     });
     await product.save();
-    res
+    return res
       .status(201)
       .json({ message: "Product created successfully", product: product });
   } catch (error) {
-    res.status(500).json({ message: "Error creating product", error });
+    return res.status(500).json({ message: "Error creating product", error });
   }
 });
 
-//get a product
+
+
+/**
+ * @swagger
+ * /api/v1/products/product/:id:
+ *   get:
+ *     summary: Get a product
+ *     description: Returns a product
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: product id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Ok product retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ *             example:
+ *               message: Product retrieved successfully 
+ *               product:
+ *                 _id: UUID_232l8%^&*
+ *                 name: shoe
+ *                 description: this is a shoe
+ *                 rate: 10
+ *                 voters: 10
+ *                 price: 10
+ *                 stock: 1
+ *                 category: shoes
+ *                 subCategory: sneakers
+ *                 companyId: UUID_232l8%^&*
+ *                 coverPoster: shoes.jpg
+ *                 sidePosters: [shoes.jpg, shoes.jpg]
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Not found
+ */
 productRouter.get("/product/:id", async (req, res) => {
   const { id } = req.params;
   if (!id) {
@@ -86,7 +164,37 @@ productRouter.get("/product/:id", async (req, res) => {
   }
 });
 
-//get all products
+
+/**
+ * @swagger
+ * /api/v1/products/products:
+ *   get:
+ *     summary: Get all products
+ *     description: Returns all products
+ *     parameters:
+ *       - in: query
+ *         name: category
+ *         description: product category
+ *         required: false
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: subCategory
+ *         description: product sub category
+ *         required: false
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Ok products retrieved
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Products retrieved successfully
+ *               products: products
+ *       400:
+ *         description: Bad request
+ */
 productRouter.get(
   "/products",
   async (req, res) => {
@@ -106,7 +214,52 @@ productRouter.get(
   },
 );
 
-//update product
+
+/**
+ * @swagger
+ * /api/v1/products/updateproduct/:id:
+ *   put:
+ *     summary: Update a product
+ *     description: Returns ok and sends OTP to user's email
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: product id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             items:
+ *               $ref: '#/components/schemas/Product'
+ *             example:
+ *                 name: shoe
+ *                 description: this is a shoe
+ *                 rate: 10
+ *                 voters: 10
+ *                 price: 10
+ *                 stock: 1
+ *                 category: shoes
+ *                 subCategory: sneakers
+ *                 companyId: UUID_232l8%^&*
+ *                 coverPoster: shoes.jpg
+ *                 sidePosters: [shoes.jpg, shoes.jpg]
+ *     responses:
+ *       200:
+ *         description: Ok product updated
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Product updated successfully 
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Not found
+ */
 productRouter.put("/updateproduct/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -128,7 +281,31 @@ productRouter.put("/updateproduct/:id", async (req, res) => {
   }
 });
 
-//delete product
+/**
+ * @swagger
+ * /api/v1/products/deleteproduct/:id:
+ *   delete:
+ *     summary: Delete a product
+ *     description: Returns ok and sends OTP to user's email
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: product id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Ok product deleted
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Product deleted successfully 
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Not found
+ */
 productRouter.delete("/deleteproduct/:id", async (req, res) => {
   const { id } = req.params;
   try {
