@@ -5,7 +5,7 @@ import Log from './components/home/logIn/Log'
 import SignUp from './components/home/logIn/SignUp'
 import ForgetPassword from './pages/ForgetPassword'
 import { Otp } from './pages/Otp'
-import NewPass from './pages/newpass'
+import NewPass from './pages/NewPass'
 function App() {
 
   return (
