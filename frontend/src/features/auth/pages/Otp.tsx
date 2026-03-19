@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { TopBar } from '../components/login/TopBar'
+import { TopBar } from '../../common/components/TopBar'
 import { useNavigate } from "react-router-dom"
 
 export const Otp = () => {

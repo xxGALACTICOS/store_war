@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { EnvelopeIcon } from "@heroicons/react/24/outline"
-import { TopBar } from "../components/login/TopBar"
+import { TopBar } from "../../common/components/TopBar"
 import { toast } from "react-toastify"
 
 const ForgetPassword = () => {

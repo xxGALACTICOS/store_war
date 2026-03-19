@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import img from "../../../../assets/login.png";
 import logo from "../../../../assets/logos.png";
 import Logo from "../../../../assets/Logo.svg";
-import Logincomp from "./Logincomp";
+import Logincomp from "../components/Logincomp";
 
 function Log() {
   return (

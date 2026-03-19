@@ -1,4 +1,4 @@
-import { TopBar } from '@/components/login/TopBar';
+import { TopBar } from '@/features/common/components/TopBar';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';

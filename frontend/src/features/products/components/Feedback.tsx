@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/ui/card"
+import { Avatar, AvatarFallback } from "@/ui/avatar"
+import { Button } from "@/ui/button"
+import { Input } from "@/ui/input"
+import { Textarea } from "@/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select"
+import { Label } from "@/ui/label"
+import { Badge } from "@/ui/badge"
 import { Star } from "lucide-react"
 
 interface Review {

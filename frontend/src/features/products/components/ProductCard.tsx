@@ -1,10 +1,10 @@
 import { StarIcon } from '@heroicons/react/16/solid'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
-import ProdImage from '../../../assets/Product.jpg'
+import ProdImage from '../../../../assets/Product.jpg'
 import { toast } from "react-toastify"
-import ButtonGradient from '../ui/ButtonGradient'
+import ButtonGradient from '@/ui/ButtonGradient'
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/ui/card"
 import { useState } from 'react'
 
 interface Props {

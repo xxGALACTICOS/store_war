@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router'
-import HomePage from './pages/HomePage'
+import HomePage from './features/home/pages/HomePage'
 import { ToastContainer } from "react-toastify"
-import Log from './components/home/logIn/Log'
-import SignUp from './components/home/logIn/SignUp'
-import ForgetPassword from './pages/ForgetPassword'
-import { Otp } from './pages/Otp'
-import NewPass from './pages/NewPass'
+import Log from './features/auth/pages/Log'
+import SignUp from './features/auth/components/SignUp'
+import ForgetPassword from './features/auth/pages/ForgetPassword'
+import { Otp } from './features/auth/pages/Otp'
+import NewPass from './features/auth/pages/NewPass'
 function App() {
 
   return (

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import NavBar from '../components/home/navbar/NavBar'
-import SideBar from '../components/home/sidebar/SideBar'
-import ProductPage from './ProductPage'
-import ProductsGrid from '../components/product/ProductsGrid'
+import NavBar from '../../common/components/navbar/NavBar'
+import SideBar from '../../common/components/sidebar/SideBar'
+import ProductPage from '../../products/pages/ProductPage'
+import ProductsGrid from '../../products/components/ProductsGrid'
 import { useSearchParams } from 'react-router'
 const HomePage = () => {
     const [sideToggle, setSideToggle] = useState(true)

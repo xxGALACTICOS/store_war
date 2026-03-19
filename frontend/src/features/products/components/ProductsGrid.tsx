@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getProducts } from '../../services/index'
+import { getProducts } from '../../../services/index'
 import ProductCard from "./ProductCard"
 
 interface Product {

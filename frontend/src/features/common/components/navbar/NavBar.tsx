@@ -1,10 +1,10 @@
-import Logo from '../../../../assets/Logo.svg'
+import Logo from '../../../../../assets/Logo.svg'
 import { Link } from 'react-router'
 import SearchBar from './SearchBar'
 import { HeartIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon, UserIcon } from '@heroicons/react/16/solid'
-import Button from '../../ui/ButtonGradient'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import Button from '@/ui/ButtonGradient'
+import { Avatar, AvatarFallback } from '@/ui/avatar'
 
 /////////////////////////////////////////
 const isAuthenticated = 1;

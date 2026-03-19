@@ -1,8 +1,8 @@
 import { ArrowLongLeftIcon } from '@heroicons/react/24/outline'
-import ProdImage from '../../assets/Product.jpg'
-import ButtonGradient from '../components/ui/ButtonGradient'
+import ProdImage from '../../../../assets/Product.jpg'
+import ButtonGradient from '../../../ui/ButtonGradient'
 import { CreditCardIcon, HeartIcon, ShoppingCartIcon, StarIcon } from '@heroicons/react/16/solid'
-import Feedback from '@/components/product/Feedback'
+import Feedback from '@/features/products/components/Feedback'
 
 interface Props {
     product: string | null
