@@ -35,7 +35,7 @@ export const Otp = () => {
                     onSubmit={handleVerify}
                     className="w-150 h-125 bg-gray-200 rounded-lg shadow-xl flex flex-col"
                 >
-                    <p className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary text-5xl text-white mt-5 ml-70">2</p>
+                    <p className="flex items-center justify-center w-13 h-13 rounded-full bg-second text-5xl text-white mt-5 ml-70">2</p>
                     <div className="w-110  ml-20 mt-8 flex flex-col items-center">
                         <h1 className="text-3xl font-semibold text-gray-800 mb-3">OTP Verification</h1>
                         <p className="text-gray-700 mb-7">We have sent the verification code to your email address</p>
@@ -62,7 +62,7 @@ export const Otp = () => {
                             disabled={!isOTPComplete}
                             className={`rounded-md w-40 h-10 text-white 
                                     ${isOTPComplete
-                                    ? "bg-secondary cursor-pointer"
+                                    ? "bg-second cursor-pointer"
                                     : "bg-gray-400 cursor-not-allowed"}`}
                         >
                             Verify OTP

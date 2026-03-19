@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { ArrowLeftCircleIcon, ArrowLeftIcon, EnvelopeIcon } from "@heroicons/react/24/outline"
+import { useNavigate } from "react-router-dom"
+import { EnvelopeIcon } from "@heroicons/react/24/outline"
 import { TopBar } from "../components/login/TopBar"
+import { toast } from "react-toastify"
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("")
@@ -9,7 +10,10 @@ const ForgetPassword = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!email) return
+    if (!email) {
+      return
+    }
+    toast.success('OTP has been sent')
     navigate("/otp")
     console.log("Submitted email:", email)
   }
@@ -25,8 +29,8 @@ const ForgetPassword = () => {
           onSubmit={handleSubmit}
           className="w-150 h-125 bg-gray-200 rounded-lg shadow-xl flex flex-col "
         >
-          <p className="flex items-center justify-center w-13 h-13 rounded-full bg-secondary text-5xl text-white mt-5 ml-70">1</p>
-          <div className="w-110  ml-15 mt-10">
+          <p className="flex items-center justify-center w-13 h-13 rounded-full bg-second text-5xl text-white mt-5 ml-70">1</p>
+          <div className="w-110  ml-15 mt-7">
             <h1 className="text-3xl font-semibold text-gray-800 mb-3">Forgot your password</h1>
             <p className="text-gray-600">Please enter the email address you'd like your password reset information sent to</p>
           </div>
@@ -51,7 +55,7 @@ const ForgetPassword = () => {
               disabled={!email}
               className={`rounded-md w-40 h-10 text-white 
               ${email
-                  ? "bg-secondary cursor-pointer"
+                  ? "bg-second cursor-pointer"
                   : "bg-gray-400 cursor-not-allowed"
                 }`}
             >

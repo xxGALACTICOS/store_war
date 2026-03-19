@@ -12,7 +12,7 @@ export const TopBar = () => {
             </div>
             <div className="w-fit ml-auto mr-50 flex">
                 <p className='mr-5 mt-1 text-white'>Already have an account?</p>
-                <Link to="/home">
+                <Link to="/login">
                     <button className='rounded-md bg-gray-700 w-30 h-10 cursor-pointer text-white'>Log in</button>
                 </Link>
             </div>
