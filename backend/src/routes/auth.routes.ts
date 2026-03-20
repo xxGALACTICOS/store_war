@@ -1,4 +1,4 @@
-import Router from "express";
+import Router, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { createUser, getUserByEmail, updateUserPassword, userExists } from "../repositories/user.repo";
 import { config } from "../config/config";
@@ -6,6 +6,7 @@ import { User } from "../database/models/user.model";
 import { generateOTP, sendOTPEmail } from "../utils/otp";
 import { redisClient } from "../config/redis";
 import { v4 as uuid } from "uuid";
+import { loginRequest, createUserRequest, forgotPasswordRequest, restorePasswordRequest, validateOtpRequest, signInResponse, createUserResponse, sendOtpResponse, restorePasswordResponse, validateOtpResponse } from "../../../shared/types/auth.types";
 
 const authRouter = Router();
 
@@ -46,7 +47,7 @@ const authRouter = Router();
  *       401:
  *         description: Invalid credentials
  */
-authRouter.post("/signin", async (req, res) => {
+authRouter.post("/signin", async (req: Request<{}, {}, loginRequest>, res: Response<signInResponse>) => {
     try {
         // parse the request body
         const { email, password } = req.body;
@@ -128,7 +129,7 @@ authRouter.post("/signin", async (req, res) => {
  *       401:
  *         description: Invalid credentials, bad request, or user already exists
  */
-authRouter.post("/signup", async (req, res) => {
+authRouter.post("/signup", async (req: Request<{}, {}, createUserRequest>, res: Response<createUserResponse>) => {
     try {
         // parse the request body
         const { username, email, password, phone } = req.body;
@@ -204,7 +205,7 @@ authRouter.post("/signup", async (req, res) => {
  *       401:
  *         description: user not found
  */
-authRouter.post("/forgotpassword", async (req, res) => {
+authRouter.post("/forgotpassword", async (req: Request<{}, {}, forgotPasswordRequest>, res: Response<sendOtpResponse>) => {
 
     try {
         const { email } = req.body;
@@ -266,7 +267,7 @@ authRouter.post("/forgotpassword", async (req, res) => {
  *       401:
  *         description: user not found
  */
-authRouter.post("/restorepassword", async (req, res) => {
+authRouter.post("/restorepassword", async (req: Request<{}, {}, restorePasswordRequest>, res: Response<restorePasswordResponse>) => {
     try {
         const { password, confirmPassword, session } = req.body;
         if (!password || !confirmPassword || !session) {
@@ -328,7 +329,7 @@ authRouter.post("/restorepassword", async (req, res) => {
  *       401:
  *         description: Invalid otp
  */
-authRouter.post("/validateotp", async (req, res) => {
+authRouter.post("/validateotp", async (req: Request<{}, {}, validateOtpRequest>, res: Response<validateOtpResponse>) => {
     const { session, otp } = req.body;
     try {
         const user = await redisClient.get(session);

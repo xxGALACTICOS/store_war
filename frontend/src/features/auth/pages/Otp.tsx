@@ -20,15 +20,14 @@ export const Otp = () => {
         }
     };
 
-        const {session}  = useParams() 
+    const { session } = useParams()
 
 
-    const  isOTPComplete =  otpin.every((digit) => digit !== "");
+    const isOTPComplete = otpin.every((digit) => digit !== "");
     const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (isOTPComplete) {
-            const res = await  authService.sendOtp(otpin.join(""),session!)
-
+            const res = await authService.sendOtp(otpin.join(""), session!)
             if (res.ok) {
                 if (res.forgotPassword) {
                     setTimeout(() => {
@@ -39,15 +38,15 @@ export const Otp = () => {
                 } else {
                     setTimeout(() => {
                         navigate("/login")
-                    }, 1500)    
+                    }, 1500)
                     toast.success(res.message)
-                    
+
                 }
                 return
             }
-            
+
             toast.error(res.message)
-            
+
         }
     };
 

@@ -1,7 +1,8 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { User } from "../database/models/user.model";
 import { Product } from "../database/models/product.model";
 import { ProductModel } from "../database/mongo/schemas/product";
+import { createProductRequest, createProductResponse, deleteProductRequest, deleteProductRequestParams, deleteProductResponse, getProductRequest, getProductRequestParams, getProductResponse, getProductsRequest, getProductsResponse, updateProductRequest, updateProductResponse } from "../../../shared/types/product.types";
 const productRouter = Router();
 
 /**
@@ -40,7 +41,7 @@ const productRouter = Router();
  *       400:
  *         description: Bad request
  */
-productRouter.post("/createproduct", async (req, res) => {
+productRouter.post("/createproduct", async (req: Request<{}, {}, createProductRequest>, res: Response<createProductResponse>) => {
   const {
     name,
     description,
@@ -53,7 +54,7 @@ productRouter.post("/createproduct", async (req, res) => {
     companyId,
     category,
     subCategory,
-  } = req.body as Product;
+  } = req.body;
   const missingFields = [];
 
   if (!name) missingFields.push("name");
@@ -141,8 +142,8 @@ productRouter.post("/createproduct", async (req, res) => {
  *       404:
  *         description: Not found
  */
-productRouter.get("/product/:id", async (req, res) => {
-  const { id } = req.params;
+productRouter.get("/product/:id", async (req: Request<{}, {}, {}>, res: Response<getProductResponse>) => {
+  const { id } = req.params as getProductRequest;
   if (!id) {
     return res.status(400).json({
       message: "Product id is required",
@@ -197,8 +198,8 @@ productRouter.get("/product/:id", async (req, res) => {
  */
 productRouter.get(
   "/products",
-  async (req, res) => {
-    const { category, subCategory } = req.query;
+  async (req, res: Response<getProductsResponse>) => {
+    const { category, subCategory } = req.query as getProductsRequest;
     try {
       const products = await ProductModel.find({
         category,
@@ -260,8 +261,9 @@ productRouter.get(
  *       404:
  *         description: Not found
  */
-productRouter.put("/updateproduct/:id", async (req, res) => {
+productRouter.put("/updateproduct/:id", async (req: Request<getProductRequestParams, {}, updateProductRequest, {}>, res: Response<updateProductResponse>) => {
   const { id } = req.params;
+  // const { name, description, price } = req.body as updateProductRequest;
   try {
     const updatedProduct = await ProductModel.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -306,7 +308,7 @@ productRouter.put("/updateproduct/:id", async (req, res) => {
  *       404:
  *         description: Not found
  */
-productRouter.delete("/deleteproduct/:id", async (req, res) => {
+productRouter.delete("/deleteproduct/:id", async (req: Request<deleteProductRequestParams, {}, deleteProductRequest, {}>, res: Response<deleteProductResponse>) => {
   const { id } = req.params;
   try {
     const deletedProduct = await ProductModel.findByIdAndDelete(id);
