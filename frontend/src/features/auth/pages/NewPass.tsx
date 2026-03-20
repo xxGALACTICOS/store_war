@@ -1,6 +1,7 @@
 import { TopBar } from '@/features/common/components/TopBar';
+import { authService } from '@/services/auth.service';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 
 const NewPass = () => {
@@ -8,7 +9,8 @@ const NewPass = () => {
     const [confirmPassword, setConfirmPassword] = useState("")
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     const navigate = useNavigate()
-    function handleSubmit(e: React.FormEvent) {
+    const {session} = useParams()
+   async  function handleSubmit (e: React.FormEvent) {
         e.preventDefault();
         if (!passwordRegex.test(newpassword)) {
             toast.error("Password must be at least 8 characters and contain a number")
@@ -19,6 +21,14 @@ const NewPass = () => {
             toast.error("Passwords do not match")
             return
         }
+
+        const res = await authService.restorePassword(newpassword,confirmPassword,session!);
+
+        if (!res.ok) {
+            toast.error(res.message)
+            return
+        }
+        
         toast.success("Your password changed successfully")
         navigate('/login')
     }

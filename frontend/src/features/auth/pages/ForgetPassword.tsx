@@ -3,19 +3,28 @@ import { useNavigate } from "react-router-dom"
 import { EnvelopeIcon } from "@heroicons/react/24/outline"
 import { TopBar } from "../../common/components/TopBar"
 import { toast } from "react-toastify"
+import { authService } from "@/services/auth.service"
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("")
   const navigate = useNavigate()
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (!email) {
       return
     }
+  
+    const res = await authService.forgetPassword(email) 
+
+    if (!res.ok) {
+      toast.error(res.message)
+      return
+    }
+      
     toast.success('OTP has been sent')
-    navigate("/otp")
-    console.log("Submitted email:", email)
+    navigate(`/otp/${ res.session}`) 
+
   }
 
   return (

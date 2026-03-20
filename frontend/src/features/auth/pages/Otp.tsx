@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { TopBar } from '../../common/components/TopBar'
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import { authService } from "@/services/auth.service";
+import { toast } from "react-toastify";
 
 export const Otp = () => {
     const [otpin, setOtpin] = useState(["", "", "", "", "", ""]);
@@ -18,13 +20,38 @@ export const Otp = () => {
         }
     };
 
-    const isOTPComplete = otpin.every((digit) => digit !== "");
-    const handleVerify = (e: React.FormEvent<HTMLFormElement>) => {
+        const {session}  = useParams() 
+
+
+    const  isOTPComplete =  otpin.every((digit) => digit !== "");
+    const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (isOTPComplete) {
+            const res = await  authService.sendOtp(otpin.join(""),session!)
+
+            if (res.ok) {
+                if (res.forgotPassword) {
+                    setTimeout(() => {
+                        navigate("/newpassword/" + res.session)
+
+                    }, 1500)
+                    toast.success(res.message)
+                } else {
+                    setTimeout(() => {
+                        navigate("/login")
+                    }, 1500)    
+                    toast.success(res.message)
+                    
+                }
+                return
+            }
+            
+            toast.error(res.message)
+            
         }
-        navigate("/home");
     };
+
+
 
     return (
         <div className="h-screen overflow-hidden bg-main">

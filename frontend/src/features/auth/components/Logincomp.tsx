@@ -1,3 +1,4 @@
+import { authService } from "@/services/auth.service";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -15,7 +16,7 @@ function Logincomp() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^.{8,}$/;
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!emailRegex.test(email)) {
@@ -28,11 +29,16 @@ function Logincomp() {
       return;
     }
 
+    const res = await authService.valiadatEmail(email, password);
+
+    if (!res.ok) {
+      toast.error(res.message);
+      return;
+    }
+
     toast.success("Login successful");
 
-    console.log("Email:", email);
-    console.log("Password:", password);
-
+ 
     navigate("/home");
   };
 
@@ -81,7 +87,8 @@ function Logincomp() {
             Show password
           </label>
 
-          <span className="text-[#4fa3ff] cursor-pointer">
+          <span className="text-[#4fa3ff] cursor-pointer"
+            onClick={() => navigate('/forgotpassword')}>
             Forgot password?
           </span>
 

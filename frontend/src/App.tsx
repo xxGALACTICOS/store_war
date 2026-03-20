@@ -17,9 +17,9 @@ function App() {
           <Route path='/home' element={<HomePage />} />
           <Route path='/login' element={<Log />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/forget' element={<ForgetPassword />} />
-          <Route path='/otp' element={<Otp />} />
-          <Route path='/newpass' element={<NewPass />} />
+          <Route path='/forgotpassword' element={<ForgetPassword />} />
+          <Route path='/otp/:session' element={<Otp />} />
+          <Route path='/newpassword/:session' element={<NewPass />} />
         </Routes>
       </Router>
     </div>
@@ -27,3 +27,4 @@ function App() {
 }
 
 export default App
+  

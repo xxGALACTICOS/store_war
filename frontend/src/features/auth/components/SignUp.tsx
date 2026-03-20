@@ -3,6 +3,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
+import { authService } from "@/services/auth.service";
 
 function SignUp() {
 
@@ -19,7 +20,7 @@ function SignUp() {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const  handleSubmit =  async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (firstName.length < 2) {
@@ -52,9 +53,21 @@ function SignUp() {
       return
     }
 
-    toast.success("Account created successfully")
+    const res =  await authService.create(firstName+" "+lastName, email, password, phone) 
 
-    navigate("/login")
+ 
+    if(!res.ok){
+      toast.error(res.message);
+       return
+    }
+    setTimeout(() => {
+      navigate(`/otp/${res.session}`)    
+    }, 3500);
+
+    toast.success(res.message )
+
+
+
   }
 
   return (
