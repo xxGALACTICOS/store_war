@@ -53,7 +53,7 @@ authRouter.post("/signin", async (req, res) => {
 
         // validate the fields ( types , min length, max length, etc)
         if (!email || !password) {
-            res.status(401).json("Invalid credentials");
+            res.status(401).json({ message: "Invalid credentials", ok: false });
             return;
         }
 
@@ -62,13 +62,13 @@ authRouter.post("/signin", async (req, res) => {
         // check if the user exists
         const user = await getUserByEmail(email);
         if (!user) {
-            res.status(401).json("Invalid credentials");
+            res.status(401).json({ message: "Invalid credentials", ok: false });
             return;
         }
 
         // check if the password is correct
         if (user.password !== password) {
-            res.status(401).json("Invalid credentials");
+            res.status(401).json({ message: "Invalid credentials", ok: false });
             return;
         }
 
@@ -88,10 +88,11 @@ authRouter.post("/signin", async (req, res) => {
             userId: user._id,
             username: user.username,
             email: user.email,
+            ok: true,
         });
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ message: "Error saving user in redis" });
+        return res.status(500).json({ message: "Error saving user in redis", ok: false });
     }
 });
 
@@ -135,13 +136,13 @@ authRouter.post("/signup", async (req, res) => {
 
         // validate the fields ( types , min length, max length, etc)
         if (!username || !email || !password || !phone) {
-            res.status(401).json({ message: "Invalid credentials" });
+            res.status(401).json({ ok: false, message: "Invalid credentials" });
             return;
         }
         // check if the user exists
         const exists = await userExists(email);
         if (exists) {
-            res.status(401).json("User already exists");
+            res.status(401).json({ ok: false, message: "User already exists" });
             return;
         }
 
@@ -163,16 +164,16 @@ authRouter.post("/signup", async (req, res) => {
         // until we verify the otp code
         const sent = await sendOTPEmail(email, otp);
         if (!sent) {
-            return res.status(500).json({ message: "Error sending OTP" });
+            return res.status(500).json({ ok: false, message: "Error sending OTP" });
         }
 
         // save the user in redis
         const redisSession = uuid();
         await redisClient.set(redisSession, JSON.stringify(newUser));
-        return res.status(201).json({ message: "OTP sent to user's email", session: redisSession });
+        return res.status(201).json({ ok: true, message: "OTP sent to user's email", session: redisSession });
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ message: "Error saving user in redis" });
+        return res.status(500).json({ ok: false, message: "Error saving user in redis" });
     }
 });
 
@@ -208,16 +209,16 @@ authRouter.post("/forgotpassword", async (req, res) => {
     try {
         const { email } = req.body;
         if (!email) {
-            return res.status(401).json("Invalid credentials");
+            return res.status(401).json({ ok: false, message: "Invalid credentials" });
         }
         const user = await getUserByEmail(email);
         if (!user) {
-            return res.status(401).json("User not found");
+            return res.status(401).json({ ok: false, message: "User not found" });
         }
         const otp = generateOTP();
         const sent = await sendOTPEmail(email, otp);
         if (!sent) {
-            return res.status(500).json("Error sending OTP");
+            return res.status(500).json({ ok: false, message: "Error sending OTP" });
         }
         const userData = {
             username: user.username,
@@ -232,11 +233,11 @@ authRouter.post("/forgotpassword", async (req, res) => {
         const redisSession = uuid();
         await redisClient.set(redisSession, JSON.stringify(userData));
 
-        return res.status(200).json({ message: "OTP sent to user's email", session: redisSession });
+        return res.status(200).json({ ok: true, message: "OTP sent to user's email", session: redisSession });
 
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ message: "Error saving user in redis" });
+        return res.status(500).json({ ok: false, message: "Error saving user in redis" });
     }
 });
 
@@ -269,16 +270,16 @@ authRouter.post("/restorepassword", async (req, res) => {
     try {
         const { password, confirmPassword, session } = req.body;
         if (!password || !confirmPassword || !session) {
-            return res.status(401).json({ message: "Invalid credentials" });
+            return res.status(401).json({ ok: false, message: "Invalid credentials" });
         }
 
         if (password !== confirmPassword) {
-            return res.status(401).json({ message: "Passwords do not match" });
+            return res.status(401).json({ ok: false, message: "Passwords do not match" });
         }
 
         const user = await redisClient.get(session);
         if (!user) {
-            return res.status(401).json({ message: "session not found" });
+            return res.status(401).json({ ok: false, message: "session not found" });
         }
 
 
@@ -286,19 +287,19 @@ authRouter.post("/restorepassword", async (req, res) => {
         const userData = JSON.parse(user);
 
         if (!userData.otpSent) {
-            return res.status(401).json({ message: "OTP missed" });
+            return res.status(401).json({ ok: false, message: "OTP missed" });
         }
         const ok = await updateUserPassword(userData.email, password);
         if (!ok) {
-            return res.status(401).json({ message: "Something went wrong" });
+            return res.status(401).json({ ok: false, message: "Something went wrong" });
         }
 
         await redisClient.del(session);
 
-        return res.status(200).json({ message: "Password changed" });
+        return res.status(200).json({ ok: true, message: "Password changed" });
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ message: "Error saving user in redis" });
+        return res.status(500).json({ ok: false, message: "Error saving user in redis" });
     }
 });
 
@@ -332,17 +333,17 @@ authRouter.post("/validateotp", async (req, res) => {
     try {
         const user = await redisClient.get(session);
         if (!user) {
-            return res.status(401).json({ message: "session not found" });
+            return res.status(401).json({ ok: false, message: "session not found" });
         }
         const userData = JSON.parse(user);
         if (userData.otp !== otp) {
-            return res.status(401).json({ message: "Invalid OTP" });
+            return res.status(401).json({ ok: false, message: "Invalid OTP" });
         }
 
         if (userData.forgotPassword) {
             userData.otpSent = true;
             await redisClient.set(session, JSON.stringify(userData));
-            return res.status(200).json({ message: "OTP is correct" });
+            return res.status(200).json({ ok: true, message: "OTP is correct" });
         }
 
         // otp is correct, delete the otp from redis
@@ -353,10 +354,10 @@ authRouter.post("/validateotp", async (req, res) => {
         }
 
         await createUser(u);
-        return res.status(200).json({ message: "OTP is correct", forgotPassword: userData.forgotPassword });
+        return res.status(200).json({ ok: true, message: "OTP is correct", forgotPassword: userData.forgotPassword });
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ message: "Error validating OTP" });
+        return res.status(500).json({ ok: false, message: "Error validating OTP" });
     }
 });
 
