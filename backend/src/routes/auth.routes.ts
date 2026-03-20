@@ -354,6 +354,7 @@ authRouter.post("/validateotp", async (req, res) => {
         }
 
         await createUser(u);
+        await redisClient.del(session);
         return res.status(200).json({ ok: true, message: "OTP is correct", forgotPassword: userData.forgotPassword });
     } catch (err) {
         console.log(err);
