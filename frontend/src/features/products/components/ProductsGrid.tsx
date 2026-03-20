@@ -29,6 +29,8 @@ interface Props {
 
 const ProductsGrid = ({ onSelectProduct }: Props) => {
     const data = useProducts<Product>('Electronics', 'Mobile Phones')
+    if (!data) return <div>Loading...</div>; // wait for API
+
     console.log(data.message)
 
 
