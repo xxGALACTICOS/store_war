@@ -343,7 +343,7 @@ authRouter.post("/validateotp", async (req, res) => {
         if (userData.forgotPassword) {
             userData.otpSent = true;
             await redisClient.set(session, JSON.stringify(userData));
-            return res.status(200).json({ ok: true, message: "OTP is correct" });
+            return res.status(200).json({ ok: true, message: "OTP is correct", forgotPassword: userData.forgotPassword });
         }
 
         // otp is correct, delete the otp from redis
