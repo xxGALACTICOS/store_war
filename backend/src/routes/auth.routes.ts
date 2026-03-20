@@ -353,8 +353,7 @@ authRouter.post("/validateotp", async (req, res) => {
         }
 
         await createUser(u);
-        return res.status(200).json({ message: "OTP is correct" });
-
+        return res.status(200).json({ message: "OTP is correct", forgotPassword: userData.forgotPassword });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ message: "Error validating OTP" });
