@@ -1,6 +1,7 @@
 import express from "express";
 import type { Application, Response } from "express";
 import cors from "cors";
+import path from "path";
 
 import { config } from "./config/config.ts";
 import { connectDB } from "./database/mongo/index.ts";
@@ -36,7 +37,7 @@ app.get("/health", (_, res) => {
 });
 
 app.get("/monitor", (_, res: Response) => {
-  res.sendFile("/home/miserable/programming/store_war/backend/src/monitor/index.html");
+  res.sendFile(path.join(__dirname, "./monitor/index.html"));
 });
 
 app.get("/events", (req, res: Response) => {
