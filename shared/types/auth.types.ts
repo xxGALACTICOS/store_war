@@ -74,3 +74,6 @@ export type validateOtpResponse = {
     forgotPassword?: boolean;
     session?: string;
 };
+
+
+

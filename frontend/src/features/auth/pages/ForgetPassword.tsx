@@ -14,16 +14,16 @@ const ForgetPassword = () => {
     if (!email) {
       return
     }
-  
-    const res = await authService.forgetPassword(email) 
+
+    const res = await authService.forgetPassword(email)
 
     if (!res.ok) {
       toast.error(res.message)
       return
     }
-      
+
     toast.success('OTP has been sent')
-    navigate(`/otp/${ res.session}`) 
+    navigate(`/otp/${res.session}`)
 
   }
 
