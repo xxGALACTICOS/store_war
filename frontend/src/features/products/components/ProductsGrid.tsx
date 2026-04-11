@@ -1,6 +1,7 @@
 import ProductCard from "./ProductCard"
 import { useProducts } from "../hooks/useProducts"
 import { useSearchParams } from "react-router"
+import NotFoundPage from "@/features/common/pages/NotFoundPage"
 
 interface Product {
     name: string
@@ -77,21 +78,38 @@ interface Props {
 }
 
 const ProductsGrid = ({ onSelectProduct }: Props) => {
-    const data = useProducts<Product>('Electronics', 'Mobile Phones')
-    if (!data) return <div>Loading...</div>; // wait for API
-
-    console.log(data.message)
-
     const [searchParams] = useSearchParams()
-    const category = searchParams.get('category') // e.g. "electronics/mobile-phones"
+    const category = searchParams.get('category')
+    const query = searchParams.get('q')?.toLowerCase().trim()
 
-    const filtered = category
-        ? mockProducts.filter((p) => {
-            const main = p.mainCategory.toLowerCase().replace(/\s+/g, '-')
-            const sub = p.subCategory.toLowerCase().replace(/\s+/g, '-')
-            return `${main}/${sub}` === category
-        })
-        : mockProducts  // show all if no filter
+    const validSlugs = new Set(
+        mockProducts.map((p) =>
+            p.mainCategory.toLowerCase().replace(/\s+/g, '-') + '/' +
+            p.subCategory.toLowerCase().replace(/\s+/g, '-')
+        )
+    )
+
+    if (category && !validSlugs.has(category)) {
+        return (<NotFoundPage />)
+
+    }
+
+    const filtered = mockProducts.filter((p) => {
+        const slug =
+            p.mainCategory.toLowerCase().replace(/\s+/g, '-') + '/' +
+            p.subCategory.toLowerCase().replace(/\s+/g, '-')
+
+        const matchesCategory = category ? slug === category : true
+        const matchesQuery = query
+            ? p.name.toLowerCase().includes(query) || p.vendor.toLowerCase().includes(query)
+            : true
+
+        return matchesCategory && matchesQuery
+    })
+
+    if (filtered.length === 0) {
+        return (<NotFoundPage />)
+    }
 
     return (
         <div className="min-h-screen bg-beige grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 p-3 h-full">
@@ -108,5 +126,4 @@ const ProductsGrid = ({ onSelectProduct }: Props) => {
         </div>
     )
 }
-
 export default ProductsGrid
