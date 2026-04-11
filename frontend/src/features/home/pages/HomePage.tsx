@@ -23,7 +23,7 @@ const HomePage = () => {
     }
 
     return (
-        <div>
+        <div className='min-h-screen flex flex-col'>
             <NavBar toggleSidebar={() => {
                 setSideToggle(!sideToggle)
             }
@@ -39,7 +39,7 @@ const HomePage = () => {
                 </div>
 
                 {/* cards container */}
-                <div className="flex-1 transition-all duration-300">
+                <div className="flex-1 transition-all duration-300 h-full">
                     {!product && (
                         <ProductsGrid onSelectProduct={openProduct} />
                     )}
