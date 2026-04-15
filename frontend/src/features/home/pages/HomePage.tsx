@@ -27,7 +27,8 @@ const HomePage = () => {
             <NavBar toggleSidebar={() => {
                 setSideToggle(!sideToggle)
             }
-            } />
+            }
+                extraFeat={true} />
 
             {/* main container */}
             <div className="flex h-full">

@@ -11,18 +11,19 @@ const isAuthenticated = 1;
 /////////////////////////////////////////
 
 interface Props {
-    toggleSidebar: () => void,
+    toggleSidebar?: () => void,
+    extraFeat?: boolean
 }
 
-const NavBar = ({ toggleSidebar }: Props) => {
+const NavBar = ({ toggleSidebar, extraFeat }: Props) => {
     return (
         <nav className='p-2 flex justify-between bg-main w-full sticky top-0 z-10'>
             <div className="flex items-center mb-1 select-none">
-                <Bars3Icon className='text-white size-10 mr-8 ml-3 cursor-pointer' onClick={toggleSidebar} />
+                {extraFeat ? <Bars3Icon className='text-white size-10 mr-8 ml-3 cursor-pointer' onClick={toggleSidebar} /> : <div className='w-21'></div>}
                 <Link to='/home'>
                     <img src={Logo} className='w-30 cursor-pointer' alt='Store War' />
                 </Link>
-                <SearchBar />
+                {extraFeat ? <SearchBar /> : <div className='mb-12'></div>}
             </div>
             <div className='flex gap-8 items-center'>
                 <Link to='/favourites'>
