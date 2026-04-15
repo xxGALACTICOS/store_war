@@ -7,6 +7,8 @@ import ForgetPassword from './features/auth/pages/ForgetPassword'
 import { Otp } from './features/auth/pages/Otp'
 import NewPass from './features/auth/pages/NewPass'
 import CartPage from './features/cart/pages/CartPage'
+import FavouritePage from './features/favourites/pages/FavouritePage'
+import ProtectedRoute from './services/ProtectedRoute'
 function App() {
 
   return (
@@ -16,7 +18,16 @@ function App() {
         <Routes>
           <Route path='/' element={<div className='flex bg-red-500 justify-center items-center h-screen'> TEST </div>} />
           <Route path='/home' element={<HomePage />} />
-          <Route path='/cart' element={<CartPage />} />
+          <Route path='/cart' element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          } />
+          <Route path='/favourites' element={
+            <ProtectedRoute>
+              <FavouritePage />
+            </ProtectedRoute>
+          } />
           <Route path='/login' element={<Log />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/forgotpassword' element={<ForgetPassword />} />
