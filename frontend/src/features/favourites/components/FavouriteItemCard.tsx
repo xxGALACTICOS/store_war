@@ -1,7 +1,7 @@
-import { Button } from '@/ui/button'
 import ButtonGradient from '@/ui/ButtonGradient'
 import { Card, CardContent } from '@/ui/card'
-import { ShoppingCart, Trash2 } from 'lucide-react'
+import TrashButton from '@/ui/TrashButton'
+import { ShoppingCart } from 'lucide-react'
 
 interface Props {
     id: number
@@ -54,14 +54,7 @@ const FavouriteItemCard = (item: Props) => {
                         Add to cart
                     </ButtonGradient>
 
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-zinc-400 hover:text-red-500"
-                        onClick={() => item.removeItem(item.id)}
-                    >
-                        <Trash2 className="w-5 h-5" />
-                    </Button>
+                    <TrashButton onRemove={item.removeItem} id={item.id} />
                 </div>
             </CardContent>
         </Card>

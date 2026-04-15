@@ -1,7 +1,8 @@
 import { Card, CardContent } from '@/ui/card'
 import { Button } from '@/ui/button'
 import type { CartItem } from '@/features/cart/utils/types'
-import { Minus, Plus, Trash2 } from 'lucide-react'
+import { Minus, Plus } from 'lucide-react'
+import TrashButton from '@/ui/TrashButton'
 
 interface Props {
     item: CartItem
@@ -83,14 +84,7 @@ const CartItemCard = ({ item, onUpdateQty, onRemove }: Props) => {
                             </div>
 
                             <div className="flex items-center gap-2">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 text-zinc-400 hover:text-red-500 hover:bg-red-50 "
-                                    onClick={() => onRemove(item.id)}
-                                >
-                                    <Trash2 className="size-6" />
-                                </Button>
+                                <TrashButton onRemove={onRemove} id={item.id} />
                             </div>
                         </div>
                     </div>

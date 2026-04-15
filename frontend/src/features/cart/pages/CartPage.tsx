@@ -1,11 +1,11 @@
 import NavBar from '@/features/common/components/navbar/NavBar'
-import { Card, CardContent } from '@/ui/card'
-import { Badge } from '@/ui/badge'
 import { ShoppingBag } from 'lucide-react'
 import { useState } from 'react'
 import type { CartItem } from '@/features/cart/utils/types'
 import CartItemCard from '../components/CartItemCard'
 import OrderSummary from '../components/OrderSummary'
+import HeaderPage from '@/features/common/pages/HeaderPage'
+import EmptyCard from '@/features/common/components/EmptyCard'
 
 
 //////////////////////////////////////////////////////
@@ -70,23 +70,13 @@ const CartPage = () => {
             <NavBar />
             <div className="max-w-5xl mx-auto pt-10">
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-8">
+                <HeaderPage length={cart.length} message='Your Cart'>
                     <ShoppingBag className="w-6 h-6 text-zinc-500" />
-                    <h1 className="text-2xl font-semibold text-zinc-900 tracking-tight">
-                        Your Cart
-                    </h1>
-                    <Badge variant="secondary" className="ml-1">
-                        {cart.length} items
-                    </Badge>
-                </div>
-
+                </HeaderPage>
                 {cart.length === 0 ? (
-                    <Card className="text-center py-20">
-                        <CardContent>
-                            <ShoppingBag className="w-12 h-12 mx-auto text-zinc-300 mb-4" />
-                            <p className="text-zinc-500 text-lg">Your cart is empty</p>
-                        </CardContent>
-                    </Card>
+                    <EmptyCard message='Your cart is empty'>
+                        <ShoppingBag className="w-12 h-12 mx-auto text-zinc-300 mb-4" />
+                    </EmptyCard>
                 ) : (
                     <div className="flex flex-row gap-6">
                         {/* Cart Items */}
